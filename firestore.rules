@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /tasks/{taskId} {
+      // A signed-in user may only read their own tasks.
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+
+      // Client-side writes are blocked.
+      // Cloud Functions (Admin SDK) bypass these rules,
+      // so the functions do their own auth + ownership checks.
+      allow create, update, delete: if false;
+    }
+  }
+}

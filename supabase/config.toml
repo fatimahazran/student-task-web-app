@@ -1,0 +1,13 @@
+project_id = "student-task-web-app"
+
+# Callers sign in with Firebase, not Supabase Auth, so the Supabase gateway
+# must not require a Supabase JWT. Each function verifies the Firebase ID
+# token itself (see functions/_shared/firebase.ts).
+[functions.create-task]
+verify_jwt = false
+
+[functions.toggle-task]
+verify_jwt = false
+
+[functions.delete-task]
+verify_jwt = false
